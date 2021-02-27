@@ -1,0 +1,308 @@
+%flexColumnFlow {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+$cos30: 0.866;
+
+$lanternHeadSurfaceWidth: 150px;
+$lanternHeadSurfaceHeight: 50px;
+$lanternHeadSurfaceOffset: $lanternHeadSurfaceWidth * $cos30;
+
+$lanternBodySurfaceWidth: 100px;
+$lanternBodySurfaceHeight: 200px;
+$lanternBodySurfaceOffset: $lanternBodySurfaceWidth * $cos30;
+
+$surfaceInnerArcSize: 60px;
+
+$knotSurfaceWidth: 6px;
+$knotSurfaceHeight: 100px;
+
+$surfaceBgColor: #fffe97;
+$borderColor: #b36700;
+$hangColor: #f60205;
+$knotRedColor: #f60205;
+$knotYellowColor: yellow;
+$knotOrangeColor: orange;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @extend %flexColumnFlow;
+  background: #800000;
+  height: 100vh;
+}
+
+.scene {
+  perspective: 800px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.lantern {
+  @extend %flexColumnFlow;
+  transform-style: preserve-3d;
+  animation: lantern-rotate 6s linear infinite normal;
+}
+
+@keyframes lantern-rotate {
+  from {
+    transform: rotateY(0);
+  }
+
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.lantern__hang {
+  width: 5px;
+  height: 200px;
+  background: $hangColor;
+}
+
+.lantern__head, .lantern__body {
+  position: relative;
+}
+
+.head-surface__main, .body-surface__main, .body-surface__attach {
+  background: $surfaceBgColor;
+}
+
+.lantern__head-surface, .lantern__body-surface {
+  position: absolute;
+  animation: surface-breathe 2s linear infinite;
+  background: $borderColor;
+}
+
+@keyframes surface-breathe {
+  50% {
+    box-shadow: 0 0 24px $surfaceBgColor;
+  }
+}
+
+.head-surface__main, .body-surface__main {
+  padding: 8px 12px;
+  overflow: hidden;
+  border: 3px solid $borderColor;
+}
+
+.surface-decoration {
+  transform-style: preserve-3d;
+}
+
+.surface-decoration__extend {
+  transform-origin: left;
+  transform: rotateY(-120deg);
+  height: 4px;
+  width: 31px;
+  background: $borderColor;
+  box-sizing: border-box;
+}
+
+.surface-decoration::before, .surface-decoration::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotateY(-120deg);
+  border: 4px solid $borderColor;
+  box-sizing: border-box;
+}
+
+.surface-decoration::before {
+  width: 30px;
+  height: 30px;
+  left: -4px;
+  transform-origin: 4px center;
+}
+
+.surface-decoration::after {
+  width: 20px;
+  height: 26px;
+  top: 15px;
+  left: -10px;
+  transform-origin: 10px center;
+}
+
+.surface-inner__rect {
+  width: 100%;
+  height: 100%;
+  border: 3px solid $borderColor;
+}
+
+.surface-inner__arc1, .surface-inner__arc2, .surface-inner__arc3, .surface-inner__arc4 {
+  position: absolute;
+  width: $surfaceInnerArcSize;
+  height: $surfaceInnerArcSize;
+  border-radius: 50%;
+  border: 3px solid $borderColor;
+}
+.surface-inner__arc1 {
+  left: -$surfaceInnerArcSize/2;
+  top: -$surfaceInnerArcSize/2;
+}
+
+.surface-inner__arc2 {
+  right: -$surfaceInnerArcSize/2;
+  top: -$surfaceInnerArcSize/2;
+}
+
+.surface-inner__arc3 {
+  right: -$surfaceInnerArcSize/2;
+  bottom: -$surfaceInnerArcSize/2;
+}
+
+.surface-inner__arc4 {
+  left: -$surfaceInnerArcSize/2;
+  bottom: -$surfaceInnerArcSize/2;
+}
+
+.lantern__head {
+  width: $lanternHeadSurfaceWidth;
+  height: $lanternHeadSurfaceHeight;
+  transform-style: preserve-3d;
+
+  .lantern__head-knots {
+    position: absolute;
+    left: 50%;
+  }
+
+  .knot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: center top -180px;
+    transform: translateZ(180px) rotateY(-30deg);
+    transform-origin: center top -180px;
+  }
+
+  @for $i from 1 through 6 {
+    .knot:nth-child(#{$i}) {
+      transform: translateX(-50%) translateZ(180px) rotateY(60deg * ($i - 1) - 30deg);
+    }
+  }
+}
+
+.lantern__head-surface {
+  transform-origin: center center (-$lanternHeadSurfaceOffset);
+}
+
+.head-surface__main {
+  position: relative;
+  width: $lanternHeadSurfaceWidth;
+  height: $lanternHeadSurfaceHeight;
+}
+
+@for $i from 1 through 6 {
+  .lantern__head-surface:nth-child(#{$i}) {
+    transform: translateZ($lanternHeadSurfaceOffset) rotateY(60deg * ($i - 1));
+  }
+}
+
+.lantern__body {
+  width: $lanternBodySurfaceWidth;
+  height: $lanternBodySurfaceHeight;
+}
+
+.lantern__body-surface {
+  transform-origin: center center (-$lanternBodySurfaceOffset);
+}
+
+.body-surface__main {
+  position: relative;
+  height: $lanternBodySurfaceHeight;
+  width: $lanternBodySurfaceWidth;
+}
+
+.body-surface__attach {
+  width: 100%;
+  height: 24px;
+  border: 3px solid $borderColor;
+  padding: 8px 12px;
+
+  .surface-inner__rect {
+    content: "";
+    display: block;
+    @extend .surface-inner__rect;
+    height: 12px;
+    border-bottom: 0;
+  }
+}
+
+@for $i from 1 through 6 {
+  .lantern__body-surface:nth-child(#{$i}) {
+    transform: translateZ($lanternBodySurfaceOffset) rotateY(60deg * ($i - 1));
+  }
+}
+
+.lantern__foot, .knot {
+  @extend %flexColumnFlow;
+}
+
+.knot {
+  transform-style: preserve-3d;
+}
+
+.knot__main {
+  position: relative;
+  width: $knotSurfaceWidth;
+  height: $knotSurfaceHeight;
+}
+
+.knot__hang {
+  width: 2px;
+  height: 80px;
+  background: $hangColor;
+}
+
+.knot__surface {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: $knotSurfaceWidth;
+  height: $knotSurfaceHeight;
+  background: $hangColor;
+  transform-origin: center center (-$knotSurfaceWidth/2);
+}
+
+.knot__surface:nth-child(n-2)::before,
+.knot__surface:nth-child(n-2)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+}
+
+.knot__surface:nth-child(n-2)::before {
+  top: 4px;
+  height: 4px;
+  background: $knotYellowColor;
+}
+
+.knot__surface:nth-child(n-2)::after {
+  top: 8px;
+  height: 8px;
+  background: $knotOrangeColor;
+}
+
+@for $i from 1 through 4 {
+  .knot__surface:nth-child(#{$i}) {
+    transform: translateZ($knotSurfaceWidth/2) rotateY(90deg * ($i - 1));
+  }
+}
+
+.nice👍 {
+  font-size: 3rem;
+  color: white;
+  line-height: 4.5rem;
+}
