@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 %flexColumnFlow {
   display: flex;
   flex-flow: column nowrap;
@@ -69,8 +71,9 @@ body {
   background: $hangColor;
 }
 
-.lantern__head, .lantern__body {
+.lantern__head, .lantern__body, .lantern__foot {
   position: relative;
+  transform-style: preserve-3d;
 }
 
 .head-surface__main, .body-surface__main, .body-surface__attach {
@@ -148,29 +151,28 @@ body {
   border: 3px solid $borderColor;
 }
 .surface-inner__arc1 {
-  left: -$surfaceInnerArcSize/2;
-  top: -$surfaceInnerArcSize/2;
+  left: math.div(-$surfaceInnerArcSize, 2);
+  top: math.div(-$surfaceInnerArcSize, 2);
 }
 
 .surface-inner__arc2 {
-  right: -$surfaceInnerArcSize/2;
-  top: -$surfaceInnerArcSize/2;
+  right: math.div(-$surfaceInnerArcSize, 2);
+  top: math.div(-$surfaceInnerArcSize, 2);
 }
 
 .surface-inner__arc3 {
-  right: -$surfaceInnerArcSize/2;
-  bottom: -$surfaceInnerArcSize/2;
+  right: math.div(-$surfaceInnerArcSize, 2);
+  bottom: math.div(-$surfaceInnerArcSize, 2);
 }
 
 .surface-inner__arc4 {
-  left: -$surfaceInnerArcSize/2;
-  bottom: -$surfaceInnerArcSize/2;
+  left: math.div(-$surfaceInnerArcSize, 2);
+  bottom: math.div(-$surfaceInnerArcSize, 2);
 }
 
 .lantern__head {
   width: $lanternHeadSurfaceWidth;
   height: $lanternHeadSurfaceHeight;
-  transform-style: preserve-3d;
 
   .lantern__head-knots {
     position: absolute;
@@ -257,6 +259,7 @@ body {
   position: relative;
   width: $knotSurfaceWidth;
   height: $knotSurfaceHeight;
+  transform-style: preserve-3d;
 }
 
 .knot__hang {
@@ -272,7 +275,7 @@ body {
   width: $knotSurfaceWidth;
   height: $knotSurfaceHeight;
   background: $hangColor;
-  transform-origin: center center (-$knotSurfaceWidth/2);
+  transform-origin: center center math.div(-$knotSurfaceWidth,2);
 }
 
 .knot__surface:nth-child(n-2)::before,
@@ -297,7 +300,7 @@ body {
 
 @for $i from 1 through 4 {
   .knot__surface:nth-child(#{$i}) {
-    transform: translateZ($knotSurfaceWidth/2) rotateY(90deg * ($i - 1));
+    transform: translateZ(math.div($knotSurfaceWidth, 2)) rotateY(90deg * ($i - 1));
   }
 }
 

@@ -9,7 +9,12 @@ module.exports = {
     filename: 'lantern.[contenthash:8].js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'docs')
+    client: {
+      overlay: {
+        errors: true,
+        warnings: false,
+      },
+    },
   },
   module: {
     rules: [
