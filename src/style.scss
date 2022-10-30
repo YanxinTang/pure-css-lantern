@@ -28,6 +28,8 @@ $hangColor: #f60205;
 $knotRedColor: #f60205;
 $knotYellowColor: yellow;
 $knotOrangeColor: orange;
+$cloudColor: #cda15f;
+$cloudEdgeColor: #800000;
 
 * {
   margin: 0;
@@ -37,8 +39,8 @@ $knotOrangeColor: orange;
 
 body {
   @extend %flexColumnFlow;
-  background: #800000;
   height: 100vh;
+  background: #800000,
 }
 
 .scene {
@@ -65,10 +67,78 @@ body {
   }
 }
 
+.auspicious-clouds {
+  width: 100%;
+  height: 320px;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 100;
+
+  $bgSize: 200px;
+  background:
+    repeating-radial-gradient(
+      circle at center,
+      $cloudColor, $cloudColor 17px,
+      $cloudEdgeColor 17px, $cloudEdgeColor 20px,
+      $cloudColor 20px, $cloudColor 37px,
+      $cloudEdgeColor 37px, $cloudEdgeColor 40px,
+      $cloudColor 40px, $cloudColor 57px,
+      $cloudEdgeColor 57px, $cloudEdgeColor 60px,
+      $cloudColor 60px, $cloudColor 77px,
+      $cloudEdgeColor 77px, $cloudEdgeColor 80px,
+      $cloudColor 80px, $cloudColor 97px,
+      $cloudEdgeColor 97px, $cloudEdgeColor 100px,
+      transparent 100px, transparent
+    ) center #{120px} / $bgSize $bgSize repeat-x,
+    repeating-radial-gradient(
+      circle at center,
+      $cloudColor, $cloudColor 17px,
+      $cloudEdgeColor 17px, $cloudEdgeColor 20px,
+      $cloudColor 20px, $cloudColor 37px,
+      $cloudEdgeColor 37px, $cloudEdgeColor 40px,
+      $cloudColor 40px, $cloudColor 57px,
+      $cloudEdgeColor 57px, $cloudEdgeColor 60px,
+      $cloudColor 60px, $cloudColor 77px,
+      $cloudEdgeColor 77px, $cloudEdgeColor 80px,
+      $cloudColor 80px, $cloudColor 97px,
+      $cloudEdgeColor 97px, $cloudEdgeColor 100px,
+      transparent 100px, transparent
+    ) #{-36px} #{60px} / $bgSize $bgSize repeat-x,
+    repeating-radial-gradient(
+      circle at center,
+      $cloudColor, $cloudColor 17px,
+      $cloudEdgeColor 17px, $cloudEdgeColor 20px,
+      $cloudColor 20px, $cloudColor 37px,
+      $cloudEdgeColor 37px, $cloudEdgeColor 40px,
+      $cloudColor 40px, $cloudColor 57px,
+      $cloudEdgeColor 57px, $cloudEdgeColor 60px,
+      $cloudColor 60px, $cloudColor 77px,
+      $cloudEdgeColor 77px, $cloudEdgeColor 80px,
+      $cloudColor 80px, $cloudColor 97px,
+      $cloudEdgeColor 97px, $cloudEdgeColor 100px,
+      transparent 100px, transparent
+    ) center #{0} / $bgSize $bgSize repeat-x,
+    repeating-radial-gradient(
+      circle at center,
+      $cloudColor, $cloudColor 17px,
+      $cloudEdgeColor 17px, $cloudEdgeColor 20px,
+      $cloudColor 20px, $cloudColor 37px,
+      $cloudEdgeColor 37px, $cloudEdgeColor 40px,
+      $cloudColor 40px, $cloudColor 57px,
+      $cloudEdgeColor 57px, $cloudEdgeColor 60px,
+      $cloudColor 60px, $cloudColor 77px,
+      $cloudEdgeColor 77px, $cloudEdgeColor 80px,
+      $cloudColor 80px, $cloudColor 97px,
+      $cloudEdgeColor 97px, $cloudEdgeColor 100px,
+      transparent 100px, transparent
+    ) -38px #{-60px} / $bgSize $bgSize repeat-x
+  ;
+}
+
 .lantern__hang {
   width: 5px;
-  height: 200px;
   background: $hangColor;
+  flex: 0 1 80px;
 }
 
 .lantern__head, .lantern__body, .lantern__foot {
@@ -177,6 +247,7 @@ body {
   .lantern__head-knots {
     position: absolute;
     left: 50%;
+    transform-style: preserve-3d;
   }
 
   .knot {
